@@ -8,32 +8,8 @@ warnings.filterwarnings("ignore")
 from finvizfinance.screener.overview import Overview
 from market_data import get_market_analysis
 from stock_screener import get_value_stocks, get_non_value_stocks
-from utils import EmailHandler, EmailFormatter, get_price, Config
+from utils import EmailHandler, EmailFormatter, get_price, Config, save_to_csv, setup_logging
 from portfolio_analyzer import analyze_portfolio_positions
-
-def setup_logging():
-    """Configure logging for the application"""
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s - %(levelname)s - %(message)s',
-        handlers=[
-            logging.FileHandler('stock_analysis.log'),
-            logging.StreamHandler()
-        ]
-    )
-    return logging.getLogger(__name__)
-
-def save_to_csv(df, filepath, mode='a', header=False):
-    """Save DataFrame to CSV with error handling"""
-    try:
-        if mode == 'a':
-            with open(filepath, 'a') as f:
-                f.write('\n')
-        df.to_csv(filepath, mode=mode, header=header, index=False)
-        logging.info(f"Successfully saved data to {filepath}")
-    except Exception as e:
-        logging.error(f"Error saving to {filepath}: {str(e)}")
-        raise
 
 def process_positions(stock_scores, filters, output_file, position_type):
     """Generic function to process both long and short positions"""

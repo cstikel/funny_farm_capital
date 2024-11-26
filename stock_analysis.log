@@ -170,3 +170,36 @@
 2024-11-18 08:10:01,245 - INFO - Portfolio analysis email sent successfully
 2024-11-18 08:10:01,245 - INFO - All analyses completed successfully
 2024-11-18 08:10:01,245 - INFO - -------- End of Script --------
+2024-11-26 06:46:24,500 - INFO - Starting analysis scripts...
+2024-11-26 06:46:24,501 - INFO - Configuration loaded successfully
+2024-11-26 06:46:24,501 - INFO - Configuration loaded successfully
+2024-11-26 06:46:24,502 - INFO - Email handler initialized
+2024-11-26 06:46:24,502 - INFO - Starting stock analysis...
+2024-11-26 06:46:24,507 - INFO - Loaded 2477 stock scores
+2024-11-26 06:46:24,507 - INFO - Processing long positions...
+2024-11-26 06:47:46,418 - INFO - -------- End of Script --------
+2024-11-26 06:48:00,176 - INFO - Starting analysis scripts...
+2024-11-26 06:48:00,177 - INFO - Configuration loaded successfully
+2024-11-26 06:48:00,177 - INFO - Configuration loaded successfully
+2024-11-26 06:48:00,178 - INFO - Email handler initialized
+2024-11-26 06:48:00,178 - INFO - Starting stock analysis...
+2024-11-26 06:48:00,183 - INFO - Loaded 2477 stock scores
+2024-11-26 06:48:00,183 - INFO - Processing long positions...
+2024-11-26 06:50:13,313 - INFO - Successfully saved data to data/investing_stocks.csv
+2024-11-26 06:50:13,313 - INFO - Found 0 long positions
+2024-11-26 06:50:13,313 - INFO - Processing short positions...
+2024-11-26 06:53:02,829 - INFO - Successfully saved data to data/short_stocks.csv
+2024-11-26 06:53:02,829 - INFO - Found 2 short positions
+2024-11-26 06:53:03,496 - INFO - Preparing stock analysis email...
+2024-11-26 06:53:04,396 - INFO - Stock analysis email sent successfully
+2024-11-26 06:53:04,396 - INFO - Skipping portfolio analysis (not Monday)
+2024-11-26 06:53:04,396 - INFO - All analyses completed successfully
+2024-11-26 06:53:04,396 - INFO - -------- End of Script --------
+2024-11-26 07:07:27,253 - INFO - Starting analysis scripts...
+2024-11-26 07:07:27,254 - INFO - Configuration loaded successfully
+2024-11-26 07:07:27,254 - INFO - Configuration loaded successfully
+2024-11-26 07:07:27,255 - INFO - Email handler initialized
+2024-11-26 07:07:27,255 - INFO - Starting stock analysis...
+2024-11-26 07:07:27,261 - INFO - Loaded 2477 stock scores
+2024-11-26 07:07:27,261 - INFO - Processing long positions...
+2024-11-26 07:07:39,310 - INFO - -------- End of Script --------
