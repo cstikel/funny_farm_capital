@@ -37,6 +37,7 @@ coverage.xml
 
 # Logs and databases
 *.log
+stock_analysis.log
 *.sqlite
 *.db
 
