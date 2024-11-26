@@ -1,0 +1,40 @@
+# config.yaml
+email:
+  recipients:
+    - kristen.anderson08@gmail.com
+    - Chas.stikes@gmail.com
+  sender: funnyfarmcapital@gmail.com
+  password: wrxf zbqb ycsy bozj
+  smtp:
+    server: smtp.gmail.com
+    port: 587
+
+stock_filters:
+  long:
+    20-Day Simple Moving Average: Price above SMA20
+    50-Day Simple Moving Average: SMA50 below SMA20
+    Index: Any
+    20-Day High/Low: 0-5% below High
+    rank_condition: 300  # Added rank condition for long positions
+  
+  short:
+    20-Day Simple Moving Average: Price below SMA20
+    50-Day Simple Moving Average: SMA50 above SMA20
+    Index: Any
+    rank_condition: 2000  # Added rank condition for short positions
+
+api:
+  financial_modeling_prep:
+    key: PHaANSXTwW2zC5hpGFO1uhe8EkPXgio7
+
+paths:
+  stock_scores: data/stock_scores/stock_score_data_recent.csv
+  investing_stocks: data/investing_stocks.csv
+  short_stocks: data/short_stocks.csv
+  portfolio_file: data/current_stock_portfolio.csv
+
+portfolio:
+  exclude_stocks:
+    - AMD
+    - NVDA
+  negative_weight: 10
