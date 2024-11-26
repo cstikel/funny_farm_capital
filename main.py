@@ -6,11 +6,8 @@ import warnings
 warnings.filterwarnings("ignore")
 
 from finvizfinance.screener.overview import Overview
-#from utils.config_loader import Config
 from market_data import get_market_analysis
 from stock_screener import get_value_stocks, get_non_value_stocks
-#from utils.price_fetcher import get_price
-#from utils.email_handler import EmailHandler, EmailFormatter
 from utils import EmailHandler, EmailFormatter, get_price, Config
 from portfolio_analyzer import analyze_portfolio_positions
 
@@ -112,9 +109,9 @@ def send_portfolio_analysis_email(config, email_handler, logger):
         portfolio_settings = config.portfolio
         
         portfolio_changes, sharpe_improvement, total_value, current_portfolio = analyze_portfolio_positions(
-            portfolio_file=config.paths['portfolio_file'],  # Updated to use paths
+            portfolio_file=config.paths['portfolio_file'],
             exclude_stocks=portfolio_settings['exclude_stocks'],
-            negative_weight=portfolio_settings.get('negative_weight', 10)  # Default to 10 if not specified
+            negative_weight=portfolio_settings.get('negative_weight', 10)
         )
         
         logger.info("Preparing portfolio analysis email...")
@@ -135,6 +132,10 @@ def send_portfolio_analysis_email(config, email_handler, logger):
     except Exception as e:
         logger.error(f"Error sending portfolio analysis email: {str(e)}")
         raise
+
+def is_monday():
+    """Check if today is Monday"""
+    return datetime.today().weekday() == 0
 
 def main():
     """Main execution function"""
@@ -182,12 +183,16 @@ def main():
             logger
         )
         
-        # Send portfolio analysis email
-        send_portfolio_analysis_email(
-            config,
-            email_handler,
-            logger
-        )
+        # Only run portfolio analysis on Mondays
+        if is_monday():
+            logger.info("Running portfolio analysis (Monday schedule)")
+            send_portfolio_analysis_email(
+                config,
+                email_handler,
+                logger
+            )
+        else:
+            logger.info("Skipping portfolio analysis (not Monday)")
         
         logger.info("All analyses completed successfully")
         
