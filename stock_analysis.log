@@ -246,3 +246,137 @@
 2024-11-27 07:34:44,637 - INFO - Loaded 2477 stock scores
 2024-11-27 07:34:44,637 - INFO - Processing long positions...
 2024-11-27 07:34:58,071 - INFO - -------- End of Script --------
+2024-11-27 08:32:36,303 - INFO - Starting analysis scripts...
+2024-11-27 08:32:36,305 - INFO - Configuration loaded successfully
+2024-11-27 08:32:36,305 - INFO - Configuration loaded successfully
+2024-11-27 08:32:36,306 - INFO - Email handler initialized
+2024-11-27 08:32:36,306 - INFO - Starting stock analysis...
+2024-11-27 08:32:36,312 - INFO - Loaded 2477 stock scores
+2024-11-27 08:32:36,312 - INFO - Processing long positions...
+2024-11-27 08:32:41,186 - WARNING - Error analyzing trends for AEHR: 'thresholds'
+2024-11-27 08:32:41,186 - WARNING - Error analyzing trends for HPK: 'thresholds'
+2024-11-27 08:32:41,186 - WARNING - Error analyzing trends for IBTA: 'thresholds'
+2024-11-27 08:32:41,188 - INFO - Successfully saved data to data/investing_stocks.csv
+2024-11-27 08:32:41,188 - INFO - Found 0 long positions with trend confirmation
+2024-11-27 08:32:41,188 - INFO - Processing short positions...
+2024-11-27 08:33:24,457 - WARNING - Error analyzing trends for AMP: 'thresholds'
+2024-11-27 08:33:24,458 - WARNING - Error analyzing trends for APTV: 'thresholds'
+2024-11-27 08:33:24,458 - WARNING - Error analyzing trends for BEN: 'thresholds'
+2024-11-27 08:33:24,458 - WARNING - Error analyzing trends for DFS: 'thresholds'
+2024-11-27 08:33:24,458 - WARNING - Error analyzing trends for IBM: 'thresholds'
+2024-11-27 08:33:24,458 - WARNING - Error analyzing trends for NTRS: 'thresholds'
+2024-11-27 08:33:24,458 - WARNING - Error analyzing trends for PNC: 'thresholds'
+2024-11-27 08:33:24,458 - WARNING - Error analyzing trends for PNW: 'thresholds'
+2024-11-27 08:33:24,458 - WARNING - Error analyzing trends for STT: 'thresholds'
+2024-11-27 08:33:24,458 - WARNING - Error analyzing trends for ABR: 'thresholds'
+2024-11-27 08:33:24,458 - WARNING - Error analyzing trends for ACEL: 'thresholds'
+2024-11-27 08:33:24,458 - WARNING - Error analyzing trends for ALRM: 'thresholds'
+2024-11-27 08:33:24,458 - WARNING - Error analyzing trends for BFH: 'thresholds'
+2024-11-27 08:33:24,458 - WARNING - Error analyzing trends for BLKB: 'thresholds'
+2024-11-27 08:33:24,458 - WARNING - Error analyzing trends for CBRL: 'thresholds'
+2024-11-27 08:33:24,458 - WARNING - Error analyzing trends for CCOI: 'thresholds'
+2024-11-27 08:33:24,458 - WARNING - Error analyzing trends for DLX: 'thresholds'
+2024-11-27 08:33:24,458 - WARNING - Error analyzing trends for DNUT: 'thresholds'
+2024-11-27 08:33:24,458 - WARNING - Error analyzing trends for GETY: 'thresholds'
+2024-11-27 08:33:24,458 - WARNING - Error analyzing trends for GSHD: 'thresholds'
+2024-11-27 08:33:24,458 - WARNING - Error analyzing trends for LADR: 'thresholds'
+2024-11-27 08:33:24,458 - WARNING - Error analyzing trends for LFCR: 'thresholds'
+2024-11-27 08:33:24,458 - WARNING - Error analyzing trends for MATV: 'thresholds'
+2024-11-27 08:33:24,458 - WARNING - Error analyzing trends for OPFI: 'thresholds'
+2024-11-27 08:33:24,458 - WARNING - Error analyzing trends for ORA: 'thresholds'
+2024-11-27 08:33:24,458 - WARNING - Error analyzing trends for SJW: 'thresholds'
+2024-11-27 08:33:24,458 - WARNING - Error analyzing trends for TRN: 'thresholds'
+2024-11-27 08:33:24,458 - WARNING - Error analyzing trends for TTSH: 'thresholds'
+2024-11-27 08:33:24,458 - WARNING - Error analyzing trends for VERX: 'thresholds'
+2024-11-27 08:33:24,458 - WARNING - Error analyzing trends for VSCO: 'thresholds'
+2024-11-27 08:33:24,458 - WARNING - Error analyzing trends for VVX: 'thresholds'
+2024-11-27 08:33:24,459 - INFO - Successfully saved data to data/short_stocks.csv
+2024-11-27 08:33:24,459 - INFO - Found 0 short positions with trend confirmation
+2024-11-27 08:33:24,983 - INFO - Preparing stock analysis email...
+2024-11-27 08:33:26,214 - INFO - Stock analysis email sent successfully
+2024-11-27 08:33:26,215 - ERROR - Error in main execution: name 'datetime' is not defined
+2024-11-27 08:33:26,215 - INFO - -------- End of Script --------
+2024-11-27 08:35:09,086 - INFO - Starting analysis scripts...
+2024-11-27 08:35:09,087 - INFO - Configuration loaded successfully
+2024-11-27 08:35:09,087 - INFO - Configuration loaded successfully
+2024-11-27 08:35:09,088 - INFO - Email handler initialized
+2024-11-27 08:35:09,088 - INFO - Starting stock analysis...
+2024-11-27 08:35:09,094 - INFO - Loaded 2477 stock scores
+2024-11-27 08:35:09,094 - INFO - Processing long positions...
+2024-11-27 08:35:13,924 - WARNING - Error analyzing trends for AEHR: 'thresholds'
+2024-11-27 08:35:13,924 - WARNING - Error analyzing trends for HPK: 'thresholds'
+2024-11-27 08:35:13,924 - WARNING - Error analyzing trends for IBTA: 'thresholds'
+2024-11-27 08:35:13,927 - INFO - Successfully saved data to data/investing_stocks.csv
+2024-11-27 08:35:13,927 - INFO - Found 0 long positions with trend confirmation
+2024-11-27 08:35:13,927 - INFO - Processing short positions...
+2024-11-27 08:35:56,827 - WARNING - Error analyzing trends for AMP: 'thresholds'
+2024-11-27 08:35:56,827 - WARNING - Error analyzing trends for APTV: 'thresholds'
+2024-11-27 08:35:56,827 - WARNING - Error analyzing trends for BEN: 'thresholds'
+2024-11-27 08:35:56,827 - WARNING - Error analyzing trends for DFS: 'thresholds'
+2024-11-27 08:35:56,827 - WARNING - Error analyzing trends for IBM: 'thresholds'
+2024-11-27 08:35:56,827 - WARNING - Error analyzing trends for NTRS: 'thresholds'
+2024-11-27 08:35:56,827 - WARNING - Error analyzing trends for PNC: 'thresholds'
+2024-11-27 08:35:56,827 - WARNING - Error analyzing trends for PNW: 'thresholds'
+2024-11-27 08:35:56,827 - WARNING - Error analyzing trends for STT: 'thresholds'
+2024-11-27 08:35:56,827 - WARNING - Error analyzing trends for ABR: 'thresholds'
+2024-11-27 08:35:56,827 - WARNING - Error analyzing trends for ACEL: 'thresholds'
+2024-11-27 08:35:56,827 - WARNING - Error analyzing trends for ALRM: 'thresholds'
+2024-11-27 08:35:56,827 - WARNING - Error analyzing trends for BFH: 'thresholds'
+2024-11-27 08:35:56,827 - WARNING - Error analyzing trends for BLKB: 'thresholds'
+2024-11-27 08:35:56,827 - WARNING - Error analyzing trends for CBRL: 'thresholds'
+2024-11-27 08:35:56,827 - WARNING - Error analyzing trends for CCOI: 'thresholds'
+2024-11-27 08:35:56,827 - WARNING - Error analyzing trends for DLX: 'thresholds'
+2024-11-27 08:35:56,827 - WARNING - Error analyzing trends for DNUT: 'thresholds'
+2024-11-27 08:35:56,827 - WARNING - Error analyzing trends for GETY: 'thresholds'
+2024-11-27 08:35:56,827 - WARNING - Error analyzing trends for GSHD: 'thresholds'
+2024-11-27 08:35:56,827 - WARNING - Error analyzing trends for LADR: 'thresholds'
+2024-11-27 08:35:56,827 - WARNING - Error analyzing trends for LFCR: 'thresholds'
+2024-11-27 08:35:56,827 - WARNING - Error analyzing trends for MATV: 'thresholds'
+2024-11-27 08:35:56,827 - WARNING - Error analyzing trends for OPFI: 'thresholds'
+2024-11-27 08:35:56,827 - WARNING - Error analyzing trends for ORA: 'thresholds'
+2024-11-27 08:35:56,827 - WARNING - Error analyzing trends for SJW: 'thresholds'
+2024-11-27 08:35:56,827 - WARNING - Error analyzing trends for TRN: 'thresholds'
+2024-11-27 08:35:56,827 - WARNING - Error analyzing trends for TTSH: 'thresholds'
+2024-11-27 08:35:56,827 - WARNING - Error analyzing trends for VERX: 'thresholds'
+2024-11-27 08:35:56,827 - WARNING - Error analyzing trends for VSCO: 'thresholds'
+2024-11-27 08:35:56,827 - WARNING - Error analyzing trends for VVX: 'thresholds'
+2024-11-27 08:35:56,829 - INFO - Successfully saved data to data/short_stocks.csv
+2024-11-27 08:35:56,829 - INFO - Found 0 short positions with trend confirmation
+2024-11-27 08:35:57,279 - INFO - Preparing stock analysis email...
+2024-11-27 08:35:57,922 - INFO - Stock analysis email sent successfully
+2024-11-27 08:35:57,923 - ERROR - Error in main execution: module 'datetime' has no attribute 'today'
+2024-11-27 08:35:57,923 - INFO - -------- End of Script --------
+2024-11-27 08:56:21,928 - INFO - Starting analysis scripts...
+2024-11-27 08:56:21,931 - INFO - Configuration loaded successfully
+2024-11-27 08:56:21,931 - INFO - Configuration loaded successfully
+2024-11-27 08:56:21,933 - INFO - Email handler initialized
+2024-11-27 08:56:21,933 - INFO - Starting stock analysis...
+2024-11-27 08:56:21,939 - INFO - Loaded 2477 stock scores
+2024-11-27 08:56:21,939 - INFO - Processing long positions...
+2024-11-27 08:56:27,617 - INFO - Successfully saved data to data/investing_stocks.csv
+2024-11-27 08:56:27,617 - INFO - Found 0 long positions with trend confirmation
+2024-11-27 08:56:27,617 - INFO - Processing short positions...
+2024-11-27 08:57:24,601 - INFO - Successfully saved data to data/short_stocks.csv
+2024-11-27 08:57:24,601 - INFO - Found 0 short positions with trend confirmation
+2024-11-27 08:57:25,079 - INFO - Preparing stock analysis email...
+2024-11-27 08:57:25,899 - INFO - Stock analysis email sent successfully
+2024-11-27 08:57:25,899 - INFO - Skipping portfolio analysis (not Monday)
+2024-11-27 08:57:25,899 - INFO - All analyses completed successfully
+2024-11-27 08:57:25,899 - INFO - -------- End of Script --------
+2024-11-27 09:14:53,322 - INFO - Starting analysis scripts...
+2024-11-27 09:14:53,324 - INFO - Configuration loaded successfully
+2024-11-27 09:14:53,324 - INFO - Configuration loaded successfully
+2024-11-27 09:14:53,326 - INFO - Email handler initialized
+2024-11-27 09:14:53,326 - INFO - Starting stock analysis...
+2024-11-27 09:14:53,332 - INFO - Loaded 2477 stock scores
+2024-11-27 09:14:53,332 - INFO - Processing long positions...
+2024-11-27 09:14:58,821 - INFO - Successfully saved data to data/investing_stocks.csv
+2024-11-27 09:14:58,821 - INFO - Found 0 long positions with trend confirmation
+2024-11-27 09:14:58,821 - INFO - Processing short positions...
+2024-11-27 09:15:51,057 - INFO - Successfully saved data to data/short_stocks.csv
+2024-11-27 09:15:51,057 - INFO - Found 1 short positions with trend confirmation
+2024-11-27 09:15:51,488 - INFO - Preparing stock analysis email...
+2024-11-27 09:15:52,283 - INFO - Stock analysis email sent successfully
+2024-11-27 09:15:52,283 - INFO - Skipping portfolio analysis (not Monday)
+2024-11-27 09:15:52,283 - INFO - All analyses completed successfully
+2024-11-27 09:15:52,283 - INFO - -------- End of Script --------

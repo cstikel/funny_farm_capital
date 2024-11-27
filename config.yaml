@@ -1,4 +1,3 @@
-# config.yaml
 email:
   recipients:
     - kristen.anderson08@gmail.com
@@ -11,17 +10,38 @@ email:
 
 stock_filters:
   long:
-    20-Day Simple Moving Average: Price above SMA20
-    50-Day Simple Moving Average: SMA50 below SMA20
-    Index: Any
-    20-Day High/Low: 0-5% below High
     rank_condition: 300  # Added rank condition for long positions
+    trend_detection:
+      lookback_period: 5           # Number of periods to look back for volume confirmation
+      min_score: 0.7              # Minimum total score to consider a trend (0-1)
+      indicator_weights:          # Weights for different indicators (should sum to 1)
+        price_ma: 0.20           # Price-Moving Average relationship weight
+        volume: 0.15             # Volume confirmation weight
+        momentum: 0.25           # Momentum indicators weight
+        macd: 0.20              # MACD signal weight
+        bollinger: 0.20         # Bollinger Band position weight
+      thresholds:
+        volume_ratio: 1.2        # Minimum volume ratio for confirmation
+        rsi_lower: 50           # RSI lower bound for uptrend
+        rsi_upper: 70           # RSI upper bound for uptrend
+        price_data_period: "3mo" # Historical data period for analysis
   
   short:
-    20-Day Simple Moving Average: Price below SMA20
-    50-Day Simple Moving Average: SMA50 above SMA20
-    Index: Any
     rank_condition: 2000  # Added rank condition for short positions
+    trend_detection:
+      lookback_period: 5           # Number of periods to look back for volume confirmation
+      min_score: 0.7              # Slightly lower threshold for shorts to catch early downtrends
+      indicator_weights:          # Weights adjusted for downtrend detection
+        price_ma: 0.25           # Increased weight for MA crossovers
+        volume: 0.20             # Increased volume weight for downtrends
+        momentum: 0.25           # Keep momentum weight for trend confirmation
+        macd: 0.15              # Slightly reduced MACD weight
+        bollinger: 0.15         # Slightly reduced Bollinger weight
+      thresholds:
+        volume_ratio: 1.3        # Higher volume requirement for downtrends
+        rsi_lower: 20           # Lower RSI bound for downtrends
+        rsi_upper: 40           # Upper RSI bound for downtrends
+        price_data_period: "3mo" # Historical data period for analysis
 
 api:
   financial_modeling_prep:

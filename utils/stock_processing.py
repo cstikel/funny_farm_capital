@@ -10,7 +10,6 @@ from utils import EmailFormatter, get_price
 import yfinance as yf
 from datetime import datetime, timedelta
 
-# Then your classes and functions follow...
 
 class OHLCVFetcher:
     """
@@ -110,6 +109,11 @@ class OHLCVFetcher:
 
 
 class EarlyTrendDetector:
+    """
+    A class to detect early trends (both up and down) in stock prices using multiple technical indicators
+    and confirmation signals.
+    """
+    
     def __init__(self, price_data: pd.DataFrame, config: dict):
         """
         Initialize with price data and configuration parameters
@@ -122,9 +126,47 @@ class EarlyTrendDetector:
         self.config = config['trend_detection']
         self.signals = pd.DataFrame(index=self.df.index)
         
-    def identify_early_trend(self, lookback_period: Optional[int] = None) -> Dict[str, float]:
+    def calculate_indicators(self) -> None:
+        """Calculate all technical indicators used for trend detection"""
+        # Volume-based indicators
+        self.df['volume_ma'] = self.df['volume'].rolling(window=20).mean()
+        self.df['volume_ratio'] = self.df['volume'] / self.df['volume_ma']
+        
+        # Price momentum indicators
+        self.df['roc_5'] = self.df['close'].pct_change(periods=5) * 100
+        self.df['roc_20'] = self.df['close'].pct_change(periods=20) * 100
+        
+        # Moving averages and derivatives
+        for period in [10, 20, 50]:
+            self.df[f'sma_{period}'] = self.df['close'].rolling(window=period).mean()
+            self.df[f'sma_{period}_slope'] = self.df[f'sma_{period}'].diff(periods=5)
+        
+        # RSI for momentum
+        delta = self.df['close'].diff()
+        gain = (delta.where(delta > 0, 0)).rolling(window=14).mean()
+        loss = (-delta.where(delta < 0, 0)).rolling(window=14).mean()
+        rs = gain / loss
+        self.df['rsi'] = 100 - (100 / (1 + rs))
+        
+        # MACD
+        exp1 = self.df['close'].ewm(span=12, adjust=False).mean()
+        exp2 = self.df['close'].ewm(span=26, adjust=False).mean()
+        self.df['macd'] = exp1 - exp2
+        self.df['macd_signal'] = self.df['macd'].ewm(span=9, adjust=False).mean()
+        
+        # Bollinger Bands
+        self.df['bb_middle'] = self.df['close'].rolling(window=20).mean()
+        std = self.df['close'].rolling(window=20).std()
+        self.df['bb_upper'] = self.df['bb_middle'] + (std * 2)
+        self.df['bb_lower'] = self.df['bb_middle'] - (std * 2)
+        
+    def identify_trend(self, lookback_period: Optional[int] = None, trend_type: str = "up") -> Dict[str, float]:
         """
-        Identify early trend signals using configuration parameters
+        Identify trend signals using configuration parameters
+        
+        Parameters:
+        lookback_period (int): Number of periods to look back
+        trend_type (str): Either "up" or "down" to indicate trend direction
         """
         lookback = lookback_period or self.config['lookback_period']
         weights = self.config['indicator_weights']
@@ -134,9 +176,14 @@ class EarlyTrendDetector:
         
         # 1. Price-MA Relationships
         ma_score = 0
-        if (self.df['close'].iloc[-1] > self.df['sma_10'].iloc[-1] and 
-            self.df['sma_10'].iloc[-1] > self.df['sma_20'].iloc[-1]):
-            ma_score = weights['price_ma']
+        if trend_type == "up":
+            if (self.df['close'].iloc[-1] > self.df['sma_10'].iloc[-1] and 
+                self.df['sma_10'].iloc[-1] > self.df['sma_20'].iloc[-1]):
+                ma_score = weights['price_ma']
+        else:  # downtrend
+            if (self.df['close'].iloc[-1] < self.df['sma_10'].iloc[-1] and 
+                self.df['sma_10'].iloc[-1] < self.df['sma_20'].iloc[-1]):
+                ma_score = weights['price_ma']
             
         # 2. Volume Confirmation
         vol_score = 0
@@ -146,22 +193,38 @@ class EarlyTrendDetector:
             
         # 3. Momentum Indicators
         momentum_score = 0
-        if (self.df['rsi'].iloc[-1] > thresholds['rsi_lower'] and 
-            self.df['rsi'].iloc[-1] < thresholds['rsi_upper'] and 
-            self.df['roc_5'].iloc[-1] > 0):
-            momentum_score = weights['momentum']
+        if trend_type == "up":
+            if (self.df['rsi'].iloc[-1] > thresholds['rsi_lower'] and 
+                self.df['rsi'].iloc[-1] < thresholds['rsi_upper'] and 
+                self.df['roc_5'].iloc[-1] > 0):
+                momentum_score = weights['momentum']
+        else:  # downtrend
+            if (self.df['rsi'].iloc[-1] < thresholds['rsi_upper'] and 
+                self.df['rsi'].iloc[-1] > thresholds['rsi_lower'] and 
+                self.df['roc_5'].iloc[-1] < 0):
+                momentum_score = weights['momentum']
             
         # 4. MACD Signal
         macd_score = 0
-        if (self.df['macd'].iloc[-1] > self.df['macd_signal'].iloc[-1] and
-            self.df['macd'].iloc[-2] <= self.df['macd_signal'].iloc[-2]):
-            macd_score = weights['macd']
+        if trend_type == "up":
+            if (self.df['macd'].iloc[-1] > self.df['macd_signal'].iloc[-1] and
+                self.df['macd'].iloc[-2] <= self.df['macd_signal'].iloc[-2]):
+                macd_score = weights['macd']
+        else:  # downtrend
+            if (self.df['macd'].iloc[-1] < self.df['macd_signal'].iloc[-1] and
+                self.df['macd'].iloc[-2] >= self.df['macd_signal'].iloc[-2]):
+                macd_score = weights['macd']
             
         # 5. Bollinger Band Position
         bb_score = 0
-        if (self.df['close'].iloc[-1] > self.df['bb_middle'].iloc[-1] and
-            self.df['close'].iloc[-1] < self.df['bb_upper'].iloc[-1]):
-            bb_score = weights['bollinger']
+        if trend_type == "up":
+            if (self.df['close'].iloc[-1] > self.df['bb_middle'].iloc[-1] and
+                self.df['close'].iloc[-1] < self.df['bb_upper'].iloc[-1]):
+                bb_score = weights['bollinger']
+        else:  # downtrend
+            if (self.df['close'].iloc[-1] < self.df['bb_middle'].iloc[-1] and
+                self.df['close'].iloc[-1] > self.df['bb_lower'].iloc[-1]):
+                bb_score = weights['bollinger']
             
         total_score = ma_score + vol_score + momentum_score + macd_score + bb_score
         
@@ -174,17 +237,24 @@ class EarlyTrendDetector:
             'bb_score': bb_score
         }
     
-    def get_trend_signals(self, min_score: Optional[float] = None) -> Dict:
-        """Get trend signals with detailed analysis"""
+    def get_trend_signals(self, min_score: Optional[float] = None, trend_type: str = "up") -> Dict:
+        """
+        Get trend signals with detailed analysis
+        
+        Parameters:
+        min_score (float): Minimum score to consider a valid trend
+        trend_type (str): Either "up" or "down" to indicate trend direction
+        """
         self.calculate_indicators()
-        signals = self.identify_early_trend()
+        signals = self.identify_trend(trend_type=trend_type)
         
         min_score = min_score or self.config['min_score']
         
         if signals['total_score'] >= min_score:
+            trend_strength_label = f"strong_{trend_type}trend" if signals['total_score'] > 0.8 else f"potential_{trend_type}trend"
             return {
                 'trend_strength': signals['total_score'],
-                'signal_type': 'strong_uptrend' if signals['total_score'] > 0.8 else 'potential_uptrend',
+                'signal_type': trend_strength_label,
                 'confidence': signals['total_score'] * 100,
                 'contributing_factors': {
                     key: value for key, value in signals.items() if value > 0
@@ -203,46 +273,40 @@ def process_positions(stock_scores, filters, output_file, position_type):
         # Get appropriate scores based on position type
         if position_type == "long":
             scores = get_value_stocks(stock_scores)
+            trend_type = "up"
         else:
             scores = get_non_value_stocks(stock_scores)
+            trend_type = "down"
         
-        # Extract screening filters (excluding rank_condition)
-        screening_filters = {k: v for k, v in filters.items() if k != 'rank_condition'}
-        
-        # Apply initial filters
-        foverview = Overview()
-        foverview.set_filter(filters_dict=screening_filters)
-        df_overview = foverview.screener_view()
-        trending_stocks = df_overview['Ticker'].to_list()
-        
-        # Filter and sort stocks
-        final_stocks = scores[scores['ticker'].isin(trending_stocks)].sort_values(by='final_rank')
-        
-        # Apply rank condition
+        # Apply rank condition first
         rank_condition = filters['rank_condition']
         if position_type == "long":
-            filtered_stocks = final_stocks[final_stocks['final_rank'] <= rank_condition]
+            filtered_stocks = scores[scores['final_rank'] <= rank_condition]
         else:
-            filtered_stocks = final_stocks[final_stocks['final_rank'] >= rank_condition]
+            filtered_stocks = scores[scores['final_rank'] >= rank_condition]
+        
+        # Get trend detection settings
+        trend_settings = filters.get('trend_detection', {})
         
         # Apply trend detection to filtered stocks
         trend_filtered_stocks = []
         for ticker in filtered_stocks['ticker']:
             try:
+                # Fetch OHLCV data with period from config
                 fetcher = OHLCVFetcher(ticker)
                 price_data = fetcher.fetch_data(
-                    period=filters['trend_detection']['thresholds']['price_data_period']
+                    period=trend_settings['thresholds']['price_data_period']
                 )
                 
                 if not price_data.empty:
+                    # Initialize trend detector with config settings
                     trend_detector = EarlyTrendDetector(price_data, filters)
-                    signals = trend_detector.get_trend_signals()
+                    signals = trend_detector.get_trend_signals(
+                        min_score=trend_settings['min_score'],
+                        trend_type=trend_type
+                    )
                     
-                    # For long positions, look for uptrends
-                    # For short positions, look for downtrends (you might want to modify EarlyTrendDetector for this)
-                    if position_type == "long" and signals:
-                        trend_filtered_stocks.append(ticker)
-                    elif position_type == "short" and not signals:
+                    if signals:
                         trend_filtered_stocks.append(ticker)
                         
             except Exception as e:
@@ -260,9 +324,9 @@ def process_positions(stock_scores, filters, output_file, position_type):
         trend_data = []
         for ticker in filtered_stocks['ticker']:
             fetcher = OHLCVFetcher(ticker)
-            price_data = fetcher.fetch_data(period=filters['trend_detection']['thresholds']['price_data_period'])
-            trend_detector = EarlyTrendDetector(price_data)
-            signals = trend_detector.get_trend_signals()
+            price_data = fetcher.fetch_data(period=trend_settings['thresholds']['price_data_period'])
+            trend_detector = EarlyTrendDetector(price_data, filters)
+            signals = trend_detector.get_trend_signals(trend_type=trend_type)
             if signals:
                 trend_data.append({
                     'ticker': ticker,
