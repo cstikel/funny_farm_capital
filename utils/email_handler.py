@@ -51,61 +51,47 @@ class EmailHandler:
 
 class EmailFormatter:
     @staticmethod
-    def format_portfolio_rebalance(portfolio_changes, sharpe_improvement, total_value, exclude_stocks, current_portfolio):
-        """Format portfolio rebalance email"""
-        email_body = []
-        
-        email_body.append("Portfolio Rebalance Analysis")
-        email_body.append("=" * 40)
-        email_body.append(f"Date: {date.today().strftime('%Y-%m-%d')}")
-        email_body.append(f"Value: ${total_value:,.0f}")
-        
-        # Excluded positions
-        email_body.append("\nExcluded Positions:")
-        email_body.append("-" * 40)
-        excluded_df = current_portfolio[current_portfolio['Symbol'].isin(exclude_stocks)].copy()
-        excluded_df['pct'] = (excluded_df['Mkt Val (Market Value)'] / total_value * 100).round(0)
-        for _, row in excluded_df.iterrows():
-            email_body.append(f"{row['Symbol']:<6} {int(row['pct'])}%")
-        
-        email_body.append(f"\nSharpe Improvement: {sharpe_improvement:.1f}%")
-        
-        # Required changes
-        email_body.append("\nRequired Changes:")
-        email_body.append("-" * 40)
-        email_body.append(f"{'Stock':<6} {'Cur->Tgt':>11} {'Change':>12}")
-        email_body.append("-" * 40)
-        
-        for _, row in portfolio_changes.iterrows():
-            percentages = f"{int(row['current_percent'])} -> {int(row['ideal_percent'])}%"
-            cash_change = f"{int(row['cash_change']):,}"
-            email_body.append(
-                f"{row['Symbol']:<6} "
-                f"{percentages:>11} "
-                f"{cash_change:>12}"
-            )
-        
-        email_body.append("-" * 40)
-        email_body.append(f"{'Total':<6} {'':>11} {portfolio_changes['cash_change'].sum():>12,}")
-        
-        return "\n".join(email_body)
-    
-    @staticmethod
     def format_stock_analysis(investing_stocks, short_stocks, market_data):
-        """Format stock analysis email"""
+        """Format stock analysis email with trend scores"""
         def format_dataframe(df):
-            df_display = df[['ticker', 'roce_rank', 'coef_rank', 'final_rank']].copy()
-            df_display = df_display.round(0)
-            df_display.columns = ['TKR', 'ROCE', 'COEF', 'RANK']
+            # Add trend_strength to display columns if it exists
+            display_columns = ['ticker', 'roce_rank', 'coef_rank', 'final_rank']
+            if 'trend_strength' in df.columns:
+                display_columns.append('trend_strength')
+                
+            df_display = df[display_columns].copy()
+            df_display = df_display.round(2)  # Round to 2 decimals for trend_strength
             
-            numeric_cols = df_display.select_dtypes(include=['float64']).columns
-            for col in numeric_cols:
-                df_display[col] = df_display[col].map('{:.0f}'.format)
+            # Rename columns for display
+            column_mapping = {
+                'ticker': 'TKR',
+                'roce_rank': 'ROCE',
+                'coef_rank': 'COEF',
+                'final_rank': 'RANK',
+                'trend_strength': 'TREND'
+            }
+            df_display.columns = [column_mapping.get(col, col) for col in df_display.columns]
+            
+            # Format numeric columns
+            for col in df_display.columns:
+                if col == 'TREND':
+                    df_display[col] = df_display[col].map('{:.2f}'.format)
+                elif col != 'TKR':
+                    df_display[col] = df_display[col].map('{:.0f}'.format)
+            
+            # Set column spacing
+            col_space = {
+                'TKR': 6,
+                'ROCE': 6,
+                'COEF': 6,
+                'RANK': 6,
+                'TREND': 6
+            }
             
             return df_display.to_string(
                 index=False,
                 justify='left',
-                col_space={'TKR': 6, 'ROCE': 6, 'COEF': 6, 'RANK': 6}
+                col_space=col_space
             )
 
         email_body = []
@@ -128,6 +114,8 @@ class EmailFormatter:
             email_body.append("")
             email_body.append(f"Total: {len(investing_stocks)}")
             email_body.append(f"Avg Rank: {investing_stocks['final_rank'].mean():.0f}")
+            if 'trend_strength' in investing_stocks.columns:
+                email_body.append(f"Avg Trend Score: {investing_stocks['trend_strength'].mean():.2f}")
         else:
             email_body.append("No long positions identified today.")
         email_body.append("")
@@ -140,6 +128,8 @@ class EmailFormatter:
             email_body.append("")
             email_body.append(f"Total: {len(short_stocks)}")
             email_body.append(f"Avg Rank: {short_stocks['final_rank'].mean():.0f}")
+            if 'trend_strength' in short_stocks.columns:
+                email_body.append(f"Avg Trend Score: {short_stocks['trend_strength'].mean():.2f}")
         else:
             email_body.append("No short positions identified today.")
         

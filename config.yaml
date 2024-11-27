@@ -10,10 +10,10 @@ email:
 
 stock_filters:
   long:
-    rank_condition: 300  # Added rank condition for long positions
+    rank_condition: 400  # Added rank condition for long positions
     trend_detection:
       lookback_period: 5           # Number of periods to look back for volume confirmation
-      min_score: 0.7              # Minimum total score to consider a trend (0-1)
+      min_score: 0.5              # Minimum total score to consider a trend (0-1)
       indicator_weights:          # Weights for different indicators (should sum to 1)
         price_ma: 0.20           # Price-Moving Average relationship weight
         volume: 0.15             # Volume confirmation weight
@@ -30,7 +30,7 @@ stock_filters:
     rank_condition: 2000  # Added rank condition for short positions
     trend_detection:
       lookback_period: 5           # Number of periods to look back for volume confirmation
-      min_score: 0.7              # Slightly lower threshold for shorts to catch early downtrends
+      min_score: 0.5              # Slightly lower threshold for shorts to catch early downtrends
       indicator_weights:          # Weights adjusted for downtrend detection
         price_ma: 0.25           # Increased weight for MA crossovers
         volume: 0.20             # Increased volume weight for downtrends

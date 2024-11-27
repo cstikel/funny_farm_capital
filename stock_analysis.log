@@ -380,3 +380,54 @@
 2024-11-27 09:15:52,283 - INFO - Skipping portfolio analysis (not Monday)
 2024-11-27 09:15:52,283 - INFO - All analyses completed successfully
 2024-11-27 09:15:52,283 - INFO - -------- End of Script --------
+2024-11-27 09:36:24,221 - INFO - Starting analysis scripts...
+2024-11-27 09:36:24,224 - INFO - Configuration loaded successfully
+2024-11-27 09:36:24,224 - INFO - Configuration loaded successfully
+2024-11-27 09:36:24,226 - INFO - Email handler initialized
+2024-11-27 09:36:24,226 - INFO - Starting stock analysis...
+2024-11-27 09:36:24,232 - INFO - Loaded 2477 stock scores
+2024-11-27 09:36:24,232 - INFO - Processing long positions...
+2024-11-27 09:36:29,839 - INFO - Found 0 long positions with trend confirmation
+2024-11-27 09:36:29,839 - INFO - Average trend strength: nan
+2024-11-27 09:36:29,839 - INFO - Processing short positions...
+2024-11-27 09:37:16,787 - INFO - Found 0 short positions with trend confirmation
+2024-11-27 09:37:16,788 - INFO - Average trend strength: nan
+2024-11-27 09:37:17,252 - INFO - Preparing stock analysis email...
+2024-11-27 09:37:18,232 - INFO - Stock analysis email sent successfully
+2024-11-27 09:37:18,232 - INFO - Skipping portfolio analysis (not Monday)
+2024-11-27 09:37:18,233 - INFO - All analyses completed successfully
+2024-11-27 09:37:18,233 - INFO - -------- End of Script --------
+2024-11-27 09:37:58,540 - INFO - Starting analysis scripts...
+2024-11-27 09:37:58,542 - INFO - Configuration loaded successfully
+2024-11-27 09:37:58,543 - INFO - Configuration loaded successfully
+2024-11-27 09:37:58,544 - INFO - Email handler initialized
+2024-11-27 09:37:58,545 - INFO - Starting stock analysis...
+2024-11-27 09:37:58,551 - INFO - Loaded 2477 stock scores
+2024-11-27 09:37:58,551 - INFO - Processing long positions...
+2024-11-27 09:38:04,017 - INFO - Found 0 long positions with trend confirmation
+2024-11-27 09:38:04,017 - INFO - Average trend strength: nan
+2024-11-27 09:38:04,017 - INFO - Processing short positions...
+2024-11-27 09:38:50,634 - INFO - Found 0 short positions with trend confirmation
+2024-11-27 09:38:50,635 - INFO - Average trend strength: nan
+2024-11-27 09:38:51,092 - INFO - Preparing stock analysis email...
+2024-11-27 09:38:51,726 - INFO - Stock analysis email sent successfully
+2024-11-27 09:38:51,727 - INFO - Skipping portfolio analysis (not Monday)
+2024-11-27 09:38:51,727 - INFO - All analyses completed successfully
+2024-11-27 09:38:51,727 - INFO - -------- End of Script --------
+2024-11-27 10:22:51,406 - INFO - Starting analysis scripts...
+2024-11-27 10:22:51,408 - INFO - Configuration loaded successfully
+2024-11-27 10:22:51,408 - INFO - Configuration loaded successfully
+2024-11-27 10:22:51,411 - INFO - Email handler initialized
+2024-11-27 10:22:51,411 - INFO - Starting stock analysis...
+2024-11-27 10:22:51,417 - INFO - Loaded 2477 stock scores
+2024-11-27 10:22:51,417 - INFO - Processing long positions...
+2024-11-27 10:22:58,810 - INFO - Found 3 long positions with trend confirmation
+2024-11-27 10:22:58,810 - INFO - Average trend strength: 0.700
+2024-11-27 10:22:58,811 - INFO - Processing short positions...
+2024-11-27 10:23:45,979 - INFO - Found 0 short positions with trend confirmation
+2024-11-27 10:23:45,979 - INFO - Average trend strength: nan
+2024-11-27 10:23:46,546 - INFO - Preparing stock analysis email...
+2024-11-27 10:23:47,400 - INFO - Stock analysis email sent successfully
+2024-11-27 10:23:47,401 - INFO - Skipping portfolio analysis (not Monday)
+2024-11-27 10:23:47,401 - INFO - All analyses completed successfully
+2024-11-27 10:23:47,401 - INFO - -------- End of Script --------

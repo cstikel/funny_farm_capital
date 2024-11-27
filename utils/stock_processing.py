@@ -289,7 +289,9 @@ def process_positions(stock_scores, filters, output_file, position_type):
         trend_settings = filters.get('trend_detection', {})
         
         # Apply trend detection to filtered stocks
+        trend_data = []  # Move trend_data collection here
         trend_filtered_stocks = []
+        
         for ticker in filtered_stocks['ticker']:
             try:
                 # Fetch OHLCV data with period from config
@@ -308,42 +310,70 @@ def process_positions(stock_scores, filters, output_file, position_type):
                     
                     if signals:
                         trend_filtered_stocks.append(ticker)
+                        # Collect all trend data immediately
+                        trend_data.append({
+                            'ticker': ticker,
+                            'trend_strength': signals['trend_strength'],
+                            'signal_type': signals['signal_type'],
+                            'confidence': signals['confidence'],
+                            'contributing_factors': str(signals['contributing_factors'])  # Convert dict to string
+                        })
                         
             except Exception as e:
                 logger.warning(f"Error analyzing trends for {ticker}: {str(e)}")
                 continue
         
-        # Filter final stocks to only those that passed trend detection
-        filtered_stocks = filtered_stocks[filtered_stocks['ticker'].isin(trend_filtered_stocks)]
+        # Create DataFrame from trend data
+        trend_df = pd.DataFrame(trend_data)
+        
+        # Filter stocks and merge with trend data in one step
+        if not trend_df.empty:
+            filtered_stocks = filtered_stocks[filtered_stocks['ticker'].isin(trend_filtered_stocks)].merge(
+                trend_df,
+                on='ticker',
+                how='left'
+            )
+        else:
+            filtered_stocks = filtered_stocks[filtered_stocks['ticker'].isin(trend_filtered_stocks)]
+            # Add empty trend columns if no trend data
+            filtered_stocks['trend_strength'] = None
+            filtered_stocks['signal_type'] = None
+            filtered_stocks['confidence'] = None
+            filtered_stocks['contributing_factors'] = None
         
         # Add additional data
         filtered_stocks['price_picked'] = filtered_stocks['ticker'].apply(get_price)
         filtered_stocks['date'] = datetime.today().strftime('%Y_%m_%d')
+        filtered_stocks['position_type'] = position_type
+        filtered_stocks['trend_type'] = trend_type
         
-        # Add trend analysis data
-        trend_data = []
-        for ticker in filtered_stocks['ticker']:
-            fetcher = OHLCVFetcher(ticker)
-            price_data = fetcher.fetch_data(period=trend_settings['thresholds']['price_data_period'])
-            trend_detector = EarlyTrendDetector(price_data, filters)
-            signals = trend_detector.get_trend_signals(trend_type=trend_type)
-            if signals:
-                trend_data.append({
-                    'ticker': ticker,
-                    'trend_strength': signals['trend_strength'],
-                    'signal_type': signals['signal_type'],
-                    'confidence': signals['confidence']
-                })
+        # Reorder columns for better CSV readability
+        column_order = [
+            'date',
+            'ticker',
+            'position_type',
+            'price_picked',
+            'final_rank',
+            'roce_rank',
+            'coef_rank',
+            'trend_type',
+            'trend_strength',
+            'confidence',
+            'signal_type',
+            'contributing_factors'
+        ] + [col for col in filtered_stocks.columns if col not in [
+            'date', 'ticker', 'position_type', 'price_picked', 'final_rank',
+            'roce_rank', 'coef_rank', 'trend_type', 'trend_strength',
+            'confidence', 'signal_type', 'contributing_factors'
+        ]]
         
-        # Merge trend data with filtered stocks
-        trend_df = pd.DataFrame(trend_data)
-        if not trend_df.empty:
-            filtered_stocks = filtered_stocks.merge(trend_df, on='ticker', how='left')
+        filtered_stocks = filtered_stocks[column_order]
         
-        # Save results
-        save_to_csv(filtered_stocks, output_file)
+        # Save results with specific float formatting
+        filtered_stocks.to_csv(output_file, index=False, float_format='%.3f')
         
         logger.info(f"Found {len(filtered_stocks)} {position_type} positions with trend confirmation")
+        logger.info(f"Average trend strength: {filtered_stocks['trend_strength'].mean():.3f}")
         return filtered_stocks
         
     except Exception as e:
