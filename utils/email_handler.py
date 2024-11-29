@@ -54,19 +54,16 @@ class EmailFormatter:
     def format_stock_analysis(investing_stocks, short_stocks, market_data):
         """Format stock analysis email with trend scores"""
         def format_dataframe(df):
-            # Add trend_strength to display columns if it exists
-            display_columns = ['ticker', 'roce_rank', 'coef_rank', 'final_rank']
+            display_columns = ['symbol', 'final_rank']
             if 'trend_strength' in df.columns:
                 display_columns.append('trend_strength')
                 
             df_display = df[display_columns].copy()
-            df_display = df_display.round(2)  # Round to 2 decimals for trend_strength
+            df_display = df_display.round(2)
             
             # Rename columns for display
             column_mapping = {
-                'ticker': 'TKR',
-                'roce_rank': 'ROCE',
-                'coef_rank': 'COEF',
+                'symbol': 'SYM',
                 'final_rank': 'RANK',
                 'trend_strength': 'TREND'
             }
@@ -76,14 +73,12 @@ class EmailFormatter:
             for col in df_display.columns:
                 if col == 'TREND':
                     df_display[col] = df_display[col].map('{:.2f}'.format)
-                elif col != 'TKR':
+                elif col != 'SYM':
                     df_display[col] = df_display[col].map('{:.0f}'.format)
             
             # Set column spacing
             col_space = {
-                'TKR': 6,
-                'ROCE': 6,
-                'COEF': 6,
+                'SYM': 6,
                 'RANK': 6,
                 'TREND': 6
             }
@@ -135,5 +130,45 @@ class EmailFormatter:
         
         email_body.append("\n" + "-" * 35)
         email_body.append("Auto-generated report - Do not reply")
+        
+        return "\n".join(email_body)
+    
+
+    @staticmethod
+    def format_portfolio_rebalance(portfolio_changes, sharpe_improvement, total_value, excluded_stocks, current_portfolio):
+        email_body = []
+        
+        # Header
+        email_body.append(f"PORTFOLIO REBALANCE")
+        email_body.append(f"{datetime.today().strftime('%b %d, %Y')}")
+        email_body.append("=" * 30)
+        
+        # Overview - One stat per line for better mobile readability
+        email_body.append("\nPORTFOLIO VALUE")
+        email_body.append(f"${total_value:,.0f}")
+        
+        email_body.append("\nSHARPE IMPROVEMENT")
+        email_body.append(f"{sharpe_improvement:.1f}%")
+        
+        # Excluded stocks
+        if excluded_stocks:
+            excluded_df = current_portfolio[current_portfolio['Symbol'].isin(excluded_stocks)]
+            excluded_value = excluded_df['Mkt Val (Market Value)'].sum()
+            email_body.append("\nEXCLUDED")
+            email_body.append(f"${excluded_value:,.0f}")
+            email_body.append(f"{', '.join(excluded_stocks)}")
+        
+        # Trades - Format each trade on separate lines
+        email_body.append("\nTRADES")
+        email_body.append("-" * 30)
+        
+        for _, row in portfolio_changes.iterrows():
+            email_body.append(f"{row['Symbol']:<6}")
+            email_body.append(f"Current: {row['current_percent']:>3.0f}%")
+            email_body.append(f"Target:  {row['ideal_percent']:>3.0f}%")
+            email_body.append(f"Change:  ${row['cash_change']:,.0f}")
+            email_body.append("-" * 30)
+        
+        email_body.append("\nAuto-generated report")
         
         return "\n".join(email_body)

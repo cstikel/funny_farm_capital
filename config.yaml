@@ -1,6 +1,6 @@
 email:
   recipients:
-    - kristen.anderson08@gmail.com
+    #- kristen.anderson08@gmail.com
     - Chas.stikes@gmail.com
   sender: funnyfarmcapital@gmail.com
   password: wrxf zbqb ycsy bozj
@@ -10,7 +10,7 @@ email:
 
 stock_filters:
   long:
-    rank_condition: 400  # Added rank condition for long positions
+    rank_condition: 750  # Added rank condition for long positions
     trend_detection:
       lookback_period: 5           # Number of periods to look back for volume confirmation
       min_score: 0.5              # Minimum total score to consider a trend (0-1)
@@ -27,7 +27,7 @@ stock_filters:
         price_data_period: "3mo" # Historical data period for analysis
   
   short:
-    rank_condition: 2000  # Added rank condition for short positions
+    rank_condition: 1000  # Added rank condition for short positions
     trend_detection:
       lookback_period: 5           # Number of periods to look back for volume confirmation
       min_score: 0.5              # Slightly lower threshold for shorts to catch early downtrends
@@ -42,6 +42,16 @@ stock_filters:
         rsi_lower: 20           # Lower RSI bound for downtrends
         rsi_upper: 40           # Upper RSI bound for downtrends
         price_data_period: "3mo" # Historical data period for analysis
+
+analysis:
+  stock_limit: 5000
+  weights:
+    roce_growth_rank: 0.25
+    roce_current_year_rank: 0.20
+    operating_margin_growth_rank: 0.20
+    operating_margin_current_year_rank: 0.20
+    revenue_growth_current_year_rank: 0.15
+
 
 api:
   financial_modeling_prep:

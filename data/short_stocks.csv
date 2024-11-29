@@ -1,1 +1,1 @@
-date,ticker,position_type,price_picked,final_rank,roce_rank,coef_rank,trend_type,trend_strength,confidence,signal_type,contributing_factors,2023,std_rank
+date,symbol,position_type,price_picked,final_rank,trend_type,trend_strength,confidence,signal_type,contributing_factors

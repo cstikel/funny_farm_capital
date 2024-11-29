@@ -1,4 +1,3 @@
-# stock_screener.py
 from finvizfinance.screener.overview import Overview
 import requests
 from bs4 import BeautifulSoup
@@ -40,15 +39,16 @@ def get_value_stocks(stock_scores):
     foverview = Overview()
     foverview.set_filter(filters_dict=filters_dict)
     df_overview = foverview.screener_view()
-    tickers = df_overview['Ticker'].to_list()
+    symbols = df_overview['Ticker'].to_list()
+    
     
     url = 'https://valueinvestorsclub.com/ideas'
     trending_symbols = get_trending_symbols(url)
     
-    value_stocks = list(set(tickers + trending_symbols))
+    value_stocks = list(set(symbols + trending_symbols))
     
-    value_scores = stock_scores[stock_scores['ticker'].isin(value_stocks)]
-    return value_scores[['ticker', '2023', 'roce_rank', 'coef_rank', 'std_rank', 'final_rank']]
+    value_scores = stock_scores[stock_scores['symbol'].isin(value_stocks)]
+    return value_scores[['symbol', 'final_rank']]
 
 def get_non_value_stocks(stock_scores):
     """Get non-value stocks based on fundamental criteria"""
@@ -60,7 +60,7 @@ def get_non_value_stocks(stock_scores):
     foverview = Overview()
     foverview.set_filter(filters_dict=filters_dict)
     df_overview = foverview.screener_view()
-    tickers = df_overview['Ticker'].to_list()
+    symbols = df_overview['Ticker'].to_list()
     
-    non_value_scores = stock_scores[stock_scores['ticker'].isin(tickers)]
-    return non_value_scores[['ticker', '2023', 'roce_rank', 'coef_rank', 'std_rank', 'final_rank']]
+    non_value_scores = stock_scores[stock_scores['symbol'].isin(symbols)]
+    return non_value_scores[['symbol', 'final_rank']]

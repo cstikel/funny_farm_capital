@@ -10,14 +10,15 @@ from stock_screener import get_value_stocks, get_non_value_stocks
 from utils import EmailHandler, EmailFormatter, get_price, Config, save_to_csv, setup_logging, is_monday
 from portfolio_analyzer import analyze_portfolio_positions
 from utils.stock_processing import process_positions, send_stock_analysis_email, send_portfolio_analysis_email
-
+from stock_ranking import StockAnalyzer
 
 def main():
     """Main execution function"""
     # Setup logging
+    print('Hi, are you read to make some fucking money?!.')
     logger = setup_logging()
     logger.info("Starting analysis scripts...")
-    
+
     try:
         # Load configuration
         config = Config()
@@ -58,16 +59,21 @@ def main():
             logger
         )
         
-        # Only run portfolio analysis on Mondays
+        # Only run portfolio and stock ranking analysis on Mondays
         if is_monday():
             logger.info("Running portfolio analysis (Monday schedule)")
-            send_portfolio_analysis_email(
-                config,
-                email_handler,
-                logger
-            )
+            send_portfolio_analysis_email(config, email_handler,logger)
+
+            #running stock ranking analysis
+            logger.info("Running stock ranking analysis (Monday schedule)")
+            analyzer = StockAnalyzer(config.api['financial_modeling_prep']['key'])
+            ranked_df = analyzer.analyze_stocks(
+                limit=config.analysis['stock_limit'],
+                weights=config.analysis['weights'])
+            ranked_df.to_csv(config.paths['stock_scores'], index=False)
+
         else:
-            logger.info("Skipping portfolio analysis (not Monday)")
+            logger.info("Skipping portfolio and stock ranking (not Monday)")
         
         logger.info("All analyses completed successfully")
         

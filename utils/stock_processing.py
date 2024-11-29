@@ -289,13 +289,14 @@ def process_positions(stock_scores, filters, output_file, position_type):
         trend_settings = filters.get('trend_detection', {})
         
         # Apply trend detection to filtered stocks
-        trend_data = []  # Move trend_data collection here
+        trend_data = []
         trend_filtered_stocks = []
         
-        for ticker in filtered_stocks['ticker']:
+        
+        for symbol in filtered_stocks['symbol']:
             try:
                 # Fetch OHLCV data with period from config
-                fetcher = OHLCVFetcher(ticker)
+                fetcher = OHLCVFetcher(symbol)
                 price_data = fetcher.fetch_data(
                     period=trend_settings['thresholds']['price_data_period']
                 )
@@ -309,18 +310,17 @@ def process_positions(stock_scores, filters, output_file, position_type):
                     )
                     
                     if signals:
-                        trend_filtered_stocks.append(ticker)
-                        # Collect all trend data immediately
+                        trend_filtered_stocks.append(symbol)
                         trend_data.append({
-                            'ticker': ticker,
+                            'symbol': symbol,
                             'trend_strength': signals['trend_strength'],
                             'signal_type': signals['signal_type'],
                             'confidence': signals['confidence'],
-                            'contributing_factors': str(signals['contributing_factors'])  # Convert dict to string
+                            'contributing_factors': str(signals['contributing_factors'])
                         })
                         
             except Exception as e:
-                logger.warning(f"Error analyzing trends for {ticker}: {str(e)}")
+                logger.warning(f"Error analyzing trends for {symbol}: {str(e)}")
                 continue
         
         # Create DataFrame from trend data
@@ -328,21 +328,20 @@ def process_positions(stock_scores, filters, output_file, position_type):
         
         # Filter stocks and merge with trend data in one step
         if not trend_df.empty:
-            filtered_stocks = filtered_stocks[filtered_stocks['ticker'].isin(trend_filtered_stocks)].merge(
+            filtered_stocks = filtered_stocks[filtered_stocks['symbol'].isin(trend_filtered_stocks)].merge(
                 trend_df,
-                on='ticker',
+                on='symbol',
                 how='left'
             )
         else:
-            filtered_stocks = filtered_stocks[filtered_stocks['ticker'].isin(trend_filtered_stocks)]
-            # Add empty trend columns if no trend data
+            filtered_stocks = filtered_stocks[filtered_stocks['symbol'].isin(trend_filtered_stocks)]
             filtered_stocks['trend_strength'] = None
             filtered_stocks['signal_type'] = None
             filtered_stocks['confidence'] = None
             filtered_stocks['contributing_factors'] = None
         
         # Add additional data
-        filtered_stocks['price_picked'] = filtered_stocks['ticker'].apply(get_price)
+        filtered_stocks['price_picked'] = filtered_stocks['symbol'].apply(get_price)
         filtered_stocks['date'] = datetime.today().strftime('%Y_%m_%d')
         filtered_stocks['position_type'] = position_type
         filtered_stocks['trend_type'] = trend_type
@@ -350,21 +349,19 @@ def process_positions(stock_scores, filters, output_file, position_type):
         # Reorder columns for better CSV readability
         column_order = [
             'date',
-            'ticker',
+            'symbol',
             'position_type',
             'price_picked',
             'final_rank',
-            'roce_rank',
-            'coef_rank',
             'trend_type',
             'trend_strength',
             'confidence',
             'signal_type',
             'contributing_factors'
         ] + [col for col in filtered_stocks.columns if col not in [
-            'date', 'ticker', 'position_type', 'price_picked', 'final_rank',
-            'roce_rank', 'coef_rank', 'trend_type', 'trend_strength',
-            'confidence', 'signal_type', 'contributing_factors'
+            'date', 'symbol', 'position_type', 'price_picked', 'final_rank',
+            'trend_type', 'trend_strength', 'confidence', 'signal_type',
+            'contributing_factors'
         ]]
         
         filtered_stocks = filtered_stocks[column_order]
@@ -378,7 +375,7 @@ def process_positions(stock_scores, filters, output_file, position_type):
         
     except Exception as e:
         logger.error(f"Error processing {position_type} positions: {str(e)}")
-        return pd.DataFrame()  # Return empty DataFrame on error
+        return pd.DataFrame()
     
 
 

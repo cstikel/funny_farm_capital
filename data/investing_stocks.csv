@@ -1,4 +1,2 @@
-date,ticker,position_type,price_picked,final_rank,roce_rank,coef_rank,trend_type,trend_strength,confidence,signal_type,contributing_factors,2023,std_rank
-2024_11_27,METC,long,12.750,412.500,1424.000,273.000,up,0.650,65.000,potential_uptrend,"{'total_score': 0.65, 'ma_score': 0.2, 'momentum_score': 0.25, 'bb_score': 0.2}",0.191,1916.000
-2024_11_27,MRC,long,13.980,357.000,544.000,645.000,up,0.800,80.000,potential_uptrend,"{'total_score': 0.8, 'ma_score': 0.2, 'volume_score': 0.15, 'momentum_score': 0.25, 'bb_score': 0.2}",0.139,1575.000
-2024_11_27,OVLY,long,30.640,443.000,871.000,615.000,up,0.650,65.000,potential_uptrend,"{'total_score': 0.65, 'ma_score': 0.2, 'momentum_score': 0.25, 'bb_score': 0.2}",0.077,405.000
+date,symbol,position_type,price_picked,final_rank,trend_type,trend_strength,confidence,signal_type,contributing_factors
+2024_11_29,TSLA,long,345.160,1.000,up,0.650,65.000,potential_uptrend,"{'total_score': 0.65, 'ma_score': 0.2, 'momentum_score': 0.25, 'bb_score': 0.2}"
