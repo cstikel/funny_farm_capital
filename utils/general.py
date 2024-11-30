@@ -28,4 +28,4 @@ def save_to_csv(df, filepath, mode='a', header=False):
 
 def is_monday():
     """Check if today is Monday"""
-    return datetime.today().weekday() == 0
+    return datetime.today().weekday() == 5
