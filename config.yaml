@@ -27,7 +27,7 @@ stock_filters:
         price_data_period: "3mo" # Historical data period for analysis
   
   short:
-    rank_condition: 1000  # Added rank condition for short positions
+    rank_condition: 4000  # Added rank condition for short positions
     trend_detection:
       lookback_period: 5           # Number of periods to look back for volume confirmation
       min_score: 0.5              # Slightly lower threshold for shorts to catch early downtrends
