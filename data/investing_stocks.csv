@@ -1,2 +1,3 @@
 date,symbol,position_type,price_picked,final_rank,trend_type,trend_strength,confidence,signal_type,contributing_factors
-2024_11_29,TSLA,long,345.160,1.000,up,0.650,65.000,potential_uptrend,"{'total_score': 0.65, 'ma_score': 0.2, 'momentum_score': 0.25, 'bb_score': 0.2}"
+2024_12_09,HNVR,long,25.390,623.000,up,0.550,55.000,potential_uptrend,"{'total_score': 0.55, 'ma_score': 0.2, 'volume_score': 0.15, 'bb_score': 0.2}"
+2024_12_09,AEHR,long,12.340,676.000,up,0.550,55.000,potential_uptrend,"{'total_score': 0.55, 'ma_score': 0.2, 'volume_score': 0.15, 'bb_score': 0.2}"

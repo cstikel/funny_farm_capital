@@ -8,6 +8,7 @@ warnings.filterwarnings("ignore")
 from market_data import get_market_analysis
 from stock_screener import get_value_stocks, get_non_value_stocks
 from utils import EmailHandler, EmailFormatter, get_price, Config, save_to_csv, setup_logging, is_monday
+from utils.stock_pitch import stock_pitch
 from portfolio_analyzer import analyze_portfolio_positions
 from utils.stock_processing import process_positions, send_stock_analysis_email, send_portfolio_analysis_email
 from stock_ranking import StockAnalyzer
@@ -39,7 +40,9 @@ def main():
             output_file=config.paths['investing_stocks'],
             position_type="long"
         )
-        
+
+        pitch = stock_pitch(investing_stocks, config.api['claude'])
+
         short_stocks = process_positions(
             stock_scores=stock_scores,
             filters=config.stock_filters['short'],
@@ -51,7 +54,8 @@ def main():
         
         # Send stock analysis email
         send_stock_analysis_email(
-            config, 
+            config,
+            pitch, 
             investing_stocks, 
             short_stocks, 
             market_data, 

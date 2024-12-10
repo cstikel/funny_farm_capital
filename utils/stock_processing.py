@@ -379,14 +379,15 @@ def process_positions(stock_scores, filters, output_file, position_type):
     
 
 
-def send_stock_analysis_email(config, investing_stocks, short_stocks, market_data, email_handler, logger):
+def send_stock_analysis_email(config, pitch, investing_stocks, short_stocks, market_data, email_handler, logger):
     """Send stock analysis email"""
     try:
         logger.info("Preparing stock analysis email...")
         email_body = EmailFormatter.format_stock_analysis(
             investing_stocks, 
             short_stocks, 
-            market_data
+            market_data,
+            pitch
         )
         
         email_handler.send_email(

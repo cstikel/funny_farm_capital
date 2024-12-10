@@ -49,10 +49,19 @@ class EmailHandler:
         finally:
             server.quit()
 
+from datetime import datetime
+
 class EmailFormatter:
     @staticmethod
-    def format_stock_analysis(investing_stocks, short_stocks, market_data):
-        """Format stock analysis email with trend scores"""
+    def format_stock_analysis(investing_stocks, short_stocks, market_data, pitch=""):
+        """Format stock analysis email with trend scores and optional pitch summary
+        
+        Args:
+            investing_stocks: DataFrame of long positions
+            short_stocks: DataFrame of short positions
+            market_data: List of market analysis points
+            pitch: Optional string containing the pitch summary for top of email
+        """
         def format_dataframe(df):
             display_columns = ['symbol', 'final_rank']
             if 'trend_strength' in df.columns:
@@ -94,6 +103,13 @@ class EmailFormatter:
         email_body.append(f"Stock Analysis - {datetime.today().strftime('%b %d, %Y')}")
         email_body.append("=" * 35)
         email_body.append("")
+        
+        # Add pitch if provided
+        if pitch:
+            email_body.append("TODAY'S SUMMARY")
+            email_body.append("-" * 15)
+            email_body.append(pitch)
+            email_body.append("")
         
         # Market Analysis
         email_body.append("MARKET ANALYSIS")
