@@ -3,6 +3,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+config.yaml
+
 # Distribution / packaging
 dist/
 build/
