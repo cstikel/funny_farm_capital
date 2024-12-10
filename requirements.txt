@@ -9,3 +9,4 @@ beautifulsoup4>=4.12.0
 PyYAML>=6.0.0
 certifi>=2023.7.22
 typing>=3.7.4
+anthropic

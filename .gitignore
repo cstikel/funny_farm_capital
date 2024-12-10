@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 
 config.yaml
+stock_analysis.log
 
 # Distribution / packaging
 dist/
