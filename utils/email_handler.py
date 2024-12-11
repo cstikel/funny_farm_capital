@@ -111,12 +111,6 @@ class EmailFormatter:
             email_body.append(pitch)
             email_body.append("")
         
-        # Market Analysis
-        email_body.append("MARKET ANALYSIS")
-        email_body.append("-" * 15)
-        email_body.extend(market_data)
-        email_body.append("")
-        
         # Long Positions
         email_body.append("LONG POSITIONS")
         email_body.append("-" * 15)
@@ -143,6 +137,12 @@ class EmailFormatter:
                 email_body.append(f"Avg Trend Score: {short_stocks['trend_strength'].mean():.2f}")
         else:
             email_body.append("No short positions identified today.")
+        email_body.append("")
+        
+        # Market Analysis - Moved after stock positions
+        email_body.append("MARKET ANALYSIS")
+        email_body.append("-" * 15)
+        email_body.extend(market_data)
         
         email_body.append("\n" + "-" * 35)
         email_body.append("Auto-generated report - Do not reply")

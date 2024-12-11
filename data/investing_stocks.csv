@@ -1,3 +1,4 @@
 date,symbol,position_type,price_picked,final_rank,trend_type,trend_strength,confidence,signal_type,contributing_factors
-2024_12_09,HNVR,long,25.390,623.000,up,0.550,55.000,potential_uptrend,"{'total_score': 0.55, 'ma_score': 0.2, 'volume_score': 0.15, 'bb_score': 0.2}"
-2024_12_09,AEHR,long,12.340,676.000,up,0.550,55.000,potential_uptrend,"{'total_score': 0.55, 'ma_score': 0.2, 'volume_score': 0.15, 'bb_score': 0.2}"
+2024_12_11,CZNC,long,20.700,484.000,up,0.800,80.000,potential_uptrend,"{'total_score': 0.8, 'ma_score': 0.2, 'volume_score': 0.15, 'momentum_score': 0.25, 'bb_score': 0.2}"
+2024_12_11,AEHR,long,12.110,676.000,up,0.800,80.000,potential_uptrend,"{'total_score': 0.8, 'ma_score': 0.2, 'volume_score': 0.15, 'momentum_score': 0.25, 'bb_score': 0.2}"
+2024_12_11,DDS,long,465.400,699.000,up,0.800,80.000,potential_uptrend,"{'total_score': 0.8, 'ma_score': 0.2, 'volume_score': 0.15, 'momentum_score': 0.25, 'bb_score': 0.2}"

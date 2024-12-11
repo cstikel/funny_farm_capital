@@ -1060,3 +1060,21 @@
 2024-12-09 20:27:14,928 - INFO - Skipping portfolio and stock ranking (not Monday)
 2024-12-09 20:27:14,928 - INFO - All analyses completed successfully
 2024-12-09 20:27:14,929 - INFO - -------- End of Script --------
+2024-12-11 09:41:09,688 - INFO - Starting analysis scripts...
+2024-12-11 09:41:09,690 - INFO - Configuration loaded successfully
+2024-12-11 09:41:09,690 - INFO - Configuration loaded successfully
+2024-12-11 09:41:09,692 - INFO - Email handler initialized
+2024-12-11 09:41:09,692 - INFO - Starting stock analysis...
+2024-12-11 09:41:09,709 - INFO - Loaded 5000 stock scores
+2024-12-11 09:41:09,709 - INFO - Processing long positions...
+2024-12-11 09:41:18,140 - INFO - Found 3 long positions with trend confirmation
+2024-12-11 09:41:18,140 - INFO - Average trend strength: 0.800
+2024-12-11 09:41:21,461 - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2024-12-11 09:41:21,467 - INFO - Processing short positions...
+2024-12-11 09:42:05,178 - INFO - Found 0 short positions with trend confirmation
+2024-12-11 09:42:05,178 - INFO - Average trend strength: nan
+2024-12-11 09:42:05,719 - INFO - Preparing stock analysis email...
+2024-12-11 09:42:06,863 - INFO - Stock analysis email sent successfully
+2024-12-11 09:42:06,863 - INFO - Skipping portfolio and stock ranking (not Monday)
+2024-12-11 09:42:06,863 - INFO - All analyses completed successfully
+2024-12-11 09:42:06,863 - INFO - -------- End of Script --------
